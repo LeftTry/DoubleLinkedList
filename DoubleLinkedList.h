@@ -10,7 +10,7 @@ class DoubleLinkedList{
     Node<T>* tail = nullptr;
 public:
     DoubleLinkedList();
-    DoubleLinkedList(int);
+    explicit DoubleLinkedList(int);
 
     Node<T>* get_head()
     void set_head(Node<T>*)
@@ -28,7 +28,7 @@ public:
     void deleteFromEnd()
     void deleteFromIndex(int)
 
-    template<class Type> friend std::ostream & operator<<(std::ostream&, LinkedList<Type>&);
+    template<class Type> friend std::ostream & operator<<(std::ostream&, DoubleLinkedList<Type>&);
 };
 
 template<typename T>
@@ -101,22 +101,39 @@ void DoubleLinkedList<T>::addToIndex(T val, int index) {
 
 template<typename T>
 void DoubleLinkedList<T>::deleteFromBegin() {
-
+    auto ptr = head->get_next();
+    delete head;
+    head = ptr;
 }
 
 template<typename T>
 void DoubleLinkedList<T>::deleteFromEnd() {
-
+    auto ptr = tail->get_prev();
+    delete tail;
+    tail = nullptr;
+    tail = ptr;
 }
 
 template<typename T>
-void DoubleLinkedList<T>::deleteFromIndex(int) {
-
+void DoubleLinkedList<T>::deleteFromIndex(int index) {
+    auto ptr = head;
+    for(int i = 0;i < index;i++){
+        if(ptr == nullptr){
+            cerr << "Wrong index" << endl;
+            return;
+        }
+        ptr = ptr->get_next();
+    }
+    ptr->get_prev()->set_next(ptr->get_next());
+    delete ptr;
 }
 
 template<class Type>
-std::ostream &operator<<(std::ostream &, LinkedList <Type> &) {
-    return <#initializer#>;
+std::ostream &operator<<(std::ostream &out, DoubleLinkedList <Type> & ll) {
+    auto ptr = ll.get_head();
+    cout << ptr->get_el();
+    while(ptr->get_next() != nullptr)
+        cout << ptr->get_el();
 }
 
 #endif //DOUBLELINKEDLIST_DOUBLELINKEDLIST_H
