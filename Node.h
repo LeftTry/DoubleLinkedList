@@ -23,12 +23,14 @@ public:
 template<typename T>
 Node<T>::Node() {
     next = nullptr;
+    prev = nullptr;
     element = 0;
 }
 
 template<typename T>
 Node<T>::Node(T el) {
     next = nullptr;
+    prev = nullptr;
     element = el;
 }
 
