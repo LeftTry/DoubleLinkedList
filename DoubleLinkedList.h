@@ -4,29 +4,30 @@
 #include "iostream"
 #include "Node.h"
 
+using namespace std;
+
 template <typename T>
 class DoubleLinkedList{
     Node<T>* head = nullptr;
     Node<T>* tail = nullptr;
 public:
     DoubleLinkedList();
-    explicit DoubleLinkedList(int);
 
-    Node<T>* get_head()
-    void set_head(Node<T>*)
+    Node<T>* get_head();
+    void set_head(Node<T>*);
 
-    Node<T>* get_tail()
-    void set_tail(Node<T>*)
+    Node<T>* get_tail();
+    void set_tail(Node<T>*);
 
-    bool isEmpty()
+    bool isEmpty();
 
-    void addToBegin(T)
-    void addToEnd(T)
-    void addToIndex(T, int)
+    void addToBegin(T);
+    void addToEnd(T);
+    void addToIndex(T, int);
 
-    void deleteFromBegin()
-    void deleteFromEnd()
-    void deleteFromIndex(int)
+    void deleteFromBegin();
+    void deleteFromEnd();
+    void deleteFromIndex(int);
 
     template<class Type> friend std::ostream & operator<<(std::ostream&, DoubleLinkedList<Type>&);
 };
@@ -35,11 +36,6 @@ template<typename T>
 DoubleLinkedList<T>::DoubleLinkedList() {
     head = nullptr;
     tail = nullptr;
-}
-
-template<typename T>
-DoubleLinkedList<T>::DoubleLinkedList(int) {
-
 }
 
 template<typename T>
@@ -70,33 +66,38 @@ bool DoubleLinkedList<T>::isEmpty() {
 
 template<typename T>
 void DoubleLinkedList<T>::addToBegin(T val) {
-    Node<T> node(val);
-    node.set_next(head);
-    head = *node;
+    auto *node = new Node<T>(val);
+    node->set_next(head);
+    node->set_prev(nullptr);
+    head = node;
 }
 
 template<typename T>
 void DoubleLinkedList<T>::addToEnd(T val) {
-    Node<T> node(val);
-    node.set_prev(tail);
-    tail = *node;
+    auto *node = new Node<T>(val);
+    if(tail == nullptr) tail = head;
+    node->set_next(nullptr);
+    node->set_prev(tail);
+    auto ptr1 = node;
+    tail->set_next(ptr1);
+    tail = node;
 }
 
 template<typename T>
 void DoubleLinkedList<T>::addToIndex(T val, int index) {
-    Node<T> node(val);
+    auto *node = new Node<T>(val);
     auto ptr = head;
     for(int i = 0;i < index;i++){
         if(ptr == nullptr){
-            cerr << "Wrong index" << endl;
+            cout << "Wrong index" << endl;
             return;
         }
         ptr = ptr->get_next();
     }
-    ptr1 = ptr->get_next();
-    ptr->set_next(*node);
-    node.set_next(ptr1);
-    node.set_prev(ptr);
+    auto ptr1 = ptr->get_next();
+    ptr->set_next(node);
+    node->set_next(ptr1);
+    node->set_prev(ptr);
 }
 
 template<typename T>
@@ -130,10 +131,12 @@ void DoubleLinkedList<T>::deleteFromIndex(int index) {
 
 template<class Type>
 std::ostream &operator<<(std::ostream &out, DoubleLinkedList <Type> & ll) {
-    auto ptr = ll.get_head();
-    cout << ptr->get_el();
-    while(ptr->get_next() != nullptr)
-        cout << ptr->get_el();
+    Node<Type> node = *ll.get_head();
+    while(node.get_next() != nullptr){
+        cout << node.get_el() << " ";
+        node = *node.get_next();
+    }
+    cout << node.get_el() << " ";
 }
 
 #endif //DOUBLELINKEDLIST_DOUBLELINKEDLIST_H

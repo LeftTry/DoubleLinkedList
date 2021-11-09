@@ -11,7 +11,7 @@ public:
     Node(T);
 
     T get_el();
-    T set_el(T);
+    void set_el(T);
 
     Node<T>* get_next();
     void set_next(Node<T>*);
@@ -24,24 +24,24 @@ template<typename T>
 Node<T>::Node() {
     next = nullptr;
     prev = nullptr;
-    element = 0;
+    data = 0;
 }
 
 template<typename T>
 Node<T>::Node(T el) {
     next = nullptr;
     prev = nullptr;
-    element = el;
+    data = el;
 }
 
 template<typename T>
 T Node<T>::get_el() {
-    return element;
+    return data;
 }
 
 template<typename T>
 void Node<T>::set_el(T el) {
-    element = el;
+    data = el;
 }
 
 template<typename T>
