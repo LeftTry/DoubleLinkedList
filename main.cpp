@@ -79,7 +79,9 @@ void generateRandBall(int& startpos, vector<Node<int>>& nearBalls){
         //cout << "Position now is: " << startpos << endl;
         //cin >> pos;
     //}
+    //cout << pos << endl;
     dll.addToIndex(color, pos - 1);
+    //cout << "ok";
     //cout << dll << endl;
     Node<int> node = *dll.get_head();
     int o = 0;
