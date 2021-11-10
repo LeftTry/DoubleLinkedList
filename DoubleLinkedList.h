@@ -29,6 +29,8 @@ public:
     void deleteFromEnd();
     void deleteFromIndex(int);
 
+    void addAfterEl(Node<T>*, int, int);
+
     template<class Type> friend std::ostream & operator<<(std::ostream&, DoubleLinkedList<Type>&);
 };
 
@@ -137,6 +139,25 @@ std::ostream &operator<<(std::ostream &out, DoubleLinkedList <Type> & ll) {
         node = *node.get_next();
     }
     cout << node.get_el() << " ";
+}
+
+template<typename T>
+void DoubleLinkedList<T>::addAfterEl(Node<T>* node, int pos, int val) {
+    if(pos >= 0) {
+        for (int i = 0; i < pos; i++)
+            if (node->get_next() != nullptr)
+                node = node->get_next();
+    }
+    else{
+        for(int i = 0;i < 0 - pos;i++)
+            if(node->get_prev() != nullptr)
+                node = node->get_prev();
+    }
+    auto *node1 = new Node<T>(val);
+    node1->set_prev(node);
+    node1->set_next(node->get_next());
+    node->get_next()->set_prev(node1);
+    node->set_next(node1);
 }
 
 #endif //DOUBLELINKEDLIST_DOUBLELINKEDLIST_H
